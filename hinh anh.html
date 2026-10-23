@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-slate-900 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tổng Hợp Bài Tập Trắc Nghiệm - Thiết Kế Web & Lập Trình HTML</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans bg-slate-950 text-slate-100 antialiased selection:bg-sky-500 selection:text-white">
+
+    <!-- Header Navigation Bar -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-800/80 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-sky-500/20 text-lg">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-base sm:text-lg bg-gradient-to-r from-white via-slate-200 to-sky-400 bg-clip-text text-transparent">
+                        Ôn Tập Trắc Nghiệm Web
+                    </h1>
+                    <p class="text-[11px] text-slate-400 font-medium">Học phần Thiết kế Web & Lập trình HTML • VHU</p>
+                </div>
+            </div>
+
+            <!-- Quick Info -->
+            <div class="hidden md:flex items-center space-x-4">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> 4 Đề kiểm tra
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                    <i class="fa-solid fa-list-check text-xs"></i> 8 Câu hỏi chi tiết
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+        <!-- SECTION 1: GALLERY & CAROUSEL VIEWER -->
+        <section class="space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-4">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-images text-sky-400"></i> Thư Viện Ảnh Đề Thi
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-0.5">Duyệt qua các ảnh chụp bài tập thực tế từ hệ thống ntan-tdt.github.io</p>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-slate-400">
+                    <span class="bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-700">Click ảnh để phóng to</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- Main Carousel Display (8 cols) -->
+                <div class="lg:col-span-8 glass-panel p-4 sm:p-6 rounded-2xl relative shadow-xl">
+                    <div class="relative group rounded-xl overflow-hidden bg-slate-900 border border-slate-800 min-h-[380px] sm:min-h-[480px] flex items-center justify-center">
+                        <!-- Main Display Image -->
+                        <img id="carousel-img" src="" alt="Hình ảnh đề thi" class="max-h-[520px] w-auto object-contain transition-all duration-300 transform cursor-zoom-in" onclick="openLightbox()">
+
+                        <!-- Floating Badges -->
+                        <div class="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
+                            <span id="badge-topic" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-900/80 text-sky-300 border border-sky-500/30 backdrop-blur-md"></span>
+                            <span id="badge-score" class="px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-500/30 backdrop-blur-md"></span>
+                        </div>
+
+                        <!-- Zoom Hint Button -->
+                        <button onclick="openLightbox()" class="absolute top-4 right-4 z-10 p-2.5 rounded-xl bg-slate-900/80 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-700 backdrop-blur-md transition-all shadow-lg" title="Phóng to">
+                            <i class="fa-solid fa-expand text-sm"></i>
+                        </button>
+
+                        <!-- Nav Controls -->
+                        <button onclick="prevSlide()" class="absolute left-3 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-900/80 hover:bg-sky-600 text-white border border-slate-700 shadow-xl transition-all transform hover:scale-110 focus:outline-none">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button onclick="nextSlide()" class="absolute right-3 top-1/2 -translate-y-1/2 p-3 rounded-full bg-slate-900/80 hover:bg-sky-600 text-white border border-slate-700 shadow-xl transition-all transform hover:scale-110 focus:outline-none">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+
+                    <!-- Slide Info & Indicator -->
+                    <div class="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 px-1">
+                        <div>
+                            <h3 id="slide-title" class="text-base sm:text-lg font-bold text-white"></h3>
+                            <p id="slide-desc" class="text-xs sm:text-sm text-slate-400"></p>
+                        </div>
+                        <div class="flex items-center gap-1.5" id="carousel-dots">
+                            <!-- Dots injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thumbnail Navigation List (4 cols) -->
+                <div class="lg:col-span-4 space-y-3">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 px-1">Danh sách bài tập (${imagesData.length})</h4>
+                    <div class="space-y-2.5" id="thumbnail-list">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECTION 2: SEARCH, FILTER & QUESTION LIST -->
+        <section class="space-y-6 pt-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+                <div>
+                    <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-sky-400"></i> Tổng Hợp Nội Dung Trắc Nghiệm
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-400 mt-0.5">Nội dung câu hỏi và đáp án chuẩn trích xuất từ 4 bài làm</p>
+                </div>
+
+                <!-- Controls: Search Input & Category Filters -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <!-- Search Input -->
+                    <div class="relative min-w-[240px]">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input type="text" id="search-input" oninput="filterQuestions()" placeholder="Tìm kiếm câu hỏi, đáp án..." class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl pl-10 pr-4 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Badges Row -->
+            <div class="flex flex-wrap items-center gap-2" id="filter-buttons">
+                <button onclick="setFilter('all')" class="filter-btn active px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-sky-600 text-white border border-sky-500 shadow-md shadow-sky-600/20" data-category="all">
+                    Tất cả (8)
+                </button>
+                <button onclick="setFilter('CSS')" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800/80 text-slate-300 hover:bg-slate-700 border border-slate-700" data-category="CSS">
+                    <i class="fa-brands fa-css3-alt text-blue-400 mr-1"></i> CSS (2)
+                </button>
+                <button onclick="setFilter('JS')" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800/80 text-slate-300 hover:bg-slate-700 border border-slate-700" data-category="JS">
+                    <i class="fa-brands fa-js text-yellow-400 mr-1"></i> JavaScript (2)
+                </button>
+                <button onclick="setFilter('HTML')" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800/80 text-slate-300 hover:bg-slate-700 border border-slate-700" data-category="HTML">
+                    <i class="fa-brands fa-html5 text-orange-400 mr-1"></i> HTML (2)
+                </button>
+                <button onclick="setFilter('General')" class="filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800/80 text-slate-300 hover:bg-slate-700 border border-slate-700" data-category="General">
+                    <i class="fa-solid fa-globe text-emerald-400 mr-1"></i> Tổng quan (2)
+                </button>
+            </div>
+
+            <!-- Questions Grid Container -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="questions-list">
+                <!-- Generated by JS -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden py-12 text-center glass-card rounded-2xl border border-dashed border-slate-800">
+                <i class="fa-solid fa-folder-open text-4xl text-slate-600 mb-3"></i>
+                <p class="text-base font-semibold text-slate-300">Không tìm thấy câu hỏi phù hợp</p>
+                <p class="text-xs text-slate-500 mt-1">Thử thay đổi từ khóa tìm kiếm hoặc chọn danh mục khác.</p>
+            </div>
+        </section>
+
+
+        <!-- SECTION 3: INTERACTIVE PRACTICE QUIZ -->
+        <section class="glass-panel p-6 sm:p-8 rounded-2xl space-y-6 border border-sky-500/20 relative overflow-hidden">
+            <div class="absolute -right-16 -top-16 w-40 h-40 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-pen-to-square text-sky-400"></i> Luyện Tập Trực Tiếp
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-400">Thử sức làm lại 8 câu hỏi này và chấm điểm tức thì</p>
+                </div>
+                <button onclick="resetPractice()" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-xs font-semibold border border-slate-700 transition-colors">
+                    <i class="fa-solid fa-rotate-right mr-1"></i> Làm lại từ đầu
+                </button>
+            </div>
+
+            <form id="practice-form" onsubmit="handlePracticeSubmit(event)" class="space-y-6">
+                <div id="practice-questions-container" class="space-y-6">
+                    <!-- Practice questions rendered by JS -->
+                </div>
+
+                <div class="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-800">
+                    <button type="submit" id="quiz-submit-btn" class="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-bold rounded-xl shadow-lg shadow-sky-500/25 transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Nộp Bài & Xem Điểm
+                    </button>
+
+                    <div id="practice-result" class="hidden w-full sm:w-auto px-5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-between gap-4">
+                        <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Kết quả:</span>
+                        <div class="text-right">
+                            <span id="practice-score-text" class="text-lg font-extrabold text-sky-400">0 / 8 câu</span>
+                            <span id="practice-grade" class="text-xs block text-slate-400">0.00 / 10 điểm</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- Lightbox Modal for Images -->
+    <div id="lightbox" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl hidden flex-col justify-between p-4 sm:p-6 transition-all duration-300">
+        <!-- Lightbox Header -->
+        <div class="flex items-center justify-between max-w-7xl w-full mx-auto">
+            <div class="flex items-center space-x-3">
+                <span id="lightbox-counter" class="text-xs font-semibold px-2.5 py-1 rounded-md bg-slate-800 text-sky-400 border border-slate-700"></span>
+                <h3 id="lightbox-title" class="text-sm sm:text-base font-bold text-white truncate max-w-xs sm:max-w-md"></h3>
+            </div>
+            <button onclick="closeLightbox()" class="p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Lightbox Image Container -->
+        <div class="relative flex-grow flex items-center justify-center p-2 my-2 overflow-hidden">
+            <img id="lightbox-img" src="" alt="Zoom Image" class="max-h-[82vh] max-w-full object-contain rounded-lg shadow-2xl transition-transform duration-200">
+            
+            <button onclick="prevSlide()" class="absolute left-2 sm:left-6 p-3.5 rounded-full bg-slate-900/80 hover:bg-sky-600 text-white border border-slate-700 shadow-2xl transition-transform hover:scale-110">
+                <i class="fa-solid fa-chevron-left text-lg"></i>
+            </button>
+            <button onclick="nextSlide()" class="absolute right-2 sm:right-6 p-3.5 rounded-full bg-slate-900/80 hover:bg-sky-600 text-white border border-slate-700 shadow-2xl transition-transform hover:scale-110">
+                <i class="fa-solid fa-chevron-right text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Lightbox Footer Info -->
+        <div class="text-center text-xs text-slate-400 max-w-xl mx-auto">
+            <p id="lightbox-desc"></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 bg-slate-950 py-6 text-center text-xs text-slate-500 mt-12">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p>© 2025 - Học phần Thiết kế Web & Lập trình HTML - TanNQ@VHU - Đại học Văn Hiến</p>
+            <p class="text-slate-600">Đã tổng hợp đầy đủ 4 bộ đề kiểm tra trắc nghiệm từ hệ thống ntan-tdt.github.io</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // 1. Data Definitions
+        const imagesData = [
+            {
+                id: 1,
+                filename: "da6eb088ada52dfb74b4.jpg",
+                title: "Ảnh 1: Thuộc tính & Đơn vị CSS",
+                topic: "CSS",
+                topicBadgeClass: "bg-blue-500/10 text-blue-400 border-blue-500/30",
+                scoreText: "Điểm bài gốc: 9.80 / 10",
+                description: "Kiểm tra kiến thức về thuộc tính visibility trong bảng và đơn vị % tương đối trong CSS.",
+                svgSrc: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='1200' viewBox='0 0 800 1200' fill='%230f172a'><rect width='100%' height='100%' fill='%23f8fafc'/><rect x='40' y='60' width='720' height='380' rx='16' fill='white' stroke='%23e2e8f0' stroke-width='3'/><text x='80' y='120' font-family='sans-serif' font-weight='bold' font-size='28' fill='%230f172a'>49. Thuộc tính 'visibility: collapse' dùng</text><text x='80' y='160' font-family='sans-serif' font-weight='bold' font-size='28' fill='%230f172a'>trong trường hợp nào?</text><circle cx='100' cy='220' r='14' fill='%230284c7'/><circle cx='100' cy='220' r='6' fill='white'/><text x='130' y='228' font-family='sans-serif' font-size='24' fill='%230f172a'>Ẩn phần tử Table-row hoặc Table-column và xóa không gian</text><circle cx='100' cy='280' r='14' fill='none' stroke='%2394a3b8' stroke-width='3'/><text x='130' y='288' font-family='sans-serif' font-size='24' fill='%23334155'>Ẩn tất cả phần tử</text><circle cx='100' cy='340' r='14' fill='none' stroke='%2394a3b8' stroke-width='3'/><text x='130' y='348' font-family='sans-serif' font-size='24' fill='%23334155'>Hiển thị phần tử</text><rect x='40' y='480' width='720' height='380' rx='16' fill='white' stroke='%23e2e8f0' stroke-width='3'/><text x='80' y='540' font-family='sans-serif' font-weight='bold' font-size='28' fill='%230f172a'>50. Đơn vị '%' trong CSS đại diện cho gì?</text><circle cx='100' cy='600' r='14' fill='%230284c7'/><circle cx='100' cy='600' r='6' fill='white'/><text x='130' y='608' font-family='sans-serif' font-size='24' fill='%230f172a'>Tỷ lệ phần trăm so với phần tử cha</text><circle cx='100' cy='660' r='14' fill='none' stroke='%2394a3b8' stroke-width='3'/><text x='130' y='668' font-family='sans-serif' font-size='24' fill='%23334155'>Đo bằng pixels</text><rect x='200' y='900' width='400' height='70' rx='12' fill='%23026aa7'/><text x='400' y='945' font-family='sans-serif' font-weight='bold' font-size='24' fill='white' text-anchor='middle'>Nộp bài và Xem điểm</text><rect x='40' y='1020' width='720' height='120' rx='12' fill='%23e0f2fe'/><text x='70' y='1070' font-family='sans-serif' font-size='22' fill='%230369a1'>Bạn đã trả lời đúng 49 trên tổng số 50 câu hỏi.</text><text x='70' y='1105' font-family='sans-serif' font-weight='bold' font-size='22' fill='%230369a1'>Điểm của bạn: 9.80 / 10</text></svg>"
+            },
+            {
+                id: 2,
+                filename: "f02706cd1be09bbec2f1.jpg",
+                title: "Ảnh 2: JS Array & Client Browser",
+                topic: "JS",
+                topicBadgeClass: "bg-yellow-500/10 text-yellow-400 border-yellow-500/30",
+                scoreText: "Điểm bài gốc: 10.00 / 10",
+                description: "Phương thức mảng join() và môi trường thực thi JavaScript trên trình duyệt web.",
+                svgSrc: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='1200' viewBox='0 0 800 1200' fill='%230f172a'><rect width='100%' height='100%' fill='%23f8fafc'/><rect x='40' y='60' width='720' height='380' rx='16' fill='white' stroke='%23e2e8f0' stroke-width='3'/><text x='80' y='120' font-family='sans-serif' font-weight='bold' font-size='28' fill='%230f172a'>49. Phương thức nào kết hợp mảng</text><text x='80' y='160' font-family='sans-serif' font-weight='bold' font-size='28' fill='%230f172a'>thành chuỗi với dấu phân tách?</text><circle cx='100' cy='220' r='14' fill='%230284c7'/><circle cx='100' cy='220' r='6' fill='white'/><text x='130' y='228' font-family='sans-serif' font-size='24' fill='%230f172a'>join()</text><circle cx='100' cy='280' r='14' fill='none' stroke='%2394a3b8' stroke-width='3'/><text x='130' y='288' font-family='sans-serif' font-size='24' fill='%23334155'>concat()</text><circle cx='100' cy='340' r='14' fill='none' stroke='%2394a3b8' stroke-width='3'/><text x='130' y='348' font-family='sans-serif' font-size='24' fill='%23334155'>split()</text><rect x='40' y='480' width='720' height='380' rx='16' fill='white' stroke='%23e2e8f0' stroke-width='3'/><text x='80' y='540' font-family='sans-serif' font-weight='bold' font-size='28' fill='%230f172a'>50. JS chạy trực tiếp ở đâu trên trình</text><text x='80' y='580' font-family='sans-serif' font-weight='bold' font-size='28' fill='%230f172a'>duyệt?</text><circle cx='100' cy='640' r='14' fill='%230284c7'/><circle cx='100' cy='640' r='6' fill='white'/><text x='130' y='648' font-family='sans-serif' font-size='24' fill='%230f172a'>Phía client</text><circle cx='100' cy='700' r='14' fill='none' stroke='%2394a3b8' stroke-width='3'/><text x='130' y='708' font-family='sans-serif' font-size='24' fill='%23334155'>Phía server</text><rect x='200' y='900' width='400' height='70' rx='12' fill='%23026aa7'/><text x='400' y='945' font-family='sans-serif' font-weight='bold' font-size='24' fill='white' text-anchor='middle'>Nộp bài và Xem điểm</text><rect x='40' y='1020' width='720' height='120' rx='12' fill='%23e0f2fe'/><text x='70' y='1070' font-family='sans-serif' font-size='22' fill='%230369a1'>Bạn đã trả lời đúng 50 trên tổng số 50 câu hỏi.</text><text x='70' y='1105' font-family='sans-serif' font-weight='bold' font-size='22' fill='%230369a1'>Điểm của bạn: 10.00 / 10</text></svg>"
+            },
+            {
+                id: 3,
+                filename: "f96003801ead9ef3c7bc.jpg",
+                title: "Ảnh 3: HTML Elements & Image Tag",
+                topic: "HTML",
+                topicBadgeClass: "bg-orange-500/10 text-orange-400 border-orange-500/30",
+                scoreText: "Điểm bài gốc: 10.00 / 10",
+                description: "Tác dụng của thẻ button và nhận biết thuộc tính không hợp lệ của thẻ img (href).",
+                svgSrc: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='1200' viewBox='0 0 800 1200' fill='%230f172a'><rect width='100%' height='100%' fill='%23f8fafc'/><rect x='40' y='60' width='720' height='380' rx='16' fill='white' stroke='%23e2e8f0' stroke-width='3'/><text x='80' y='120' font-family='sans-serif' font-weight='bold' font-size='28' fill='%230f172a'>49. Thẻ &lt;button&gt; dùng để làm gì?</text><circle cx='100' cy='180' r='14' fill='%230284c7'/><circle cx='100' cy='180' r='6' fill='white'/><text x='130' y='188' font-family='sans-serif' font-size='24' fill='%230f172a'>Tạo nút bấm có thể có nội dung phong phú</text><circle cx='100' cy='240' r='14' fill='none' stroke='%2394a3b8' stroke-width='3'/><text x='130' y='248' font-family='sans-serif' font-size='24' fill='%23334155'>Tạo đoạn văn</text><rect x='40' y='480' width='720' height='380' rx='16' fill='white' stroke='%23e2e8f0' stroke-width='3'/><text x='80' y='540' font-family='sans-serif' font-weight='bold' font-size='28' fill='%230f172a'>50. Thuộc tính nào sau đây không thuộc</text><text x='80' y='580' font-family='sans-serif' font-weight='bold' font-size='28' fill='%230f172a'>thẻ &lt;img&gt;?</text><circle cx='100' cy='640' r='14' fill='none' stroke='%2394a3b8' stroke-width='3'/><text x='130' y='648' font-family='sans-serif' font-size='24' fill='%23334155'>width</text><circle cx='100' cy='700' r='14' fill='none' stroke='%2394a3b8' stroke-width='3'/><text x='130' y='708' font-family='sans-serif' font-size='24' fill='%23334155'>height</text><circle cx='100' cy='760' r='14' fill='%230284c7'/><circle cx='100' cy='760' r='6' fill='white'/><text x='130' y='768' font-family='sans-serif' font-size='24' fill='%230f172a'>href</text><rect x='200' y='900' width='400' height='70' rx='12' fill='%23026aa7'/><text x='400' y='945' font-family='sans-serif' font-weight='bold' font-size='24' fill='white' text-anchor='middle'>Nộp bài và Xem điểm</text><rect x='40' y='1020' width='720' height='120' rx='12' fill='%23e0f2fe'/><text x='70' y='1070' font-family='sans-serif' font-size='22' fill='%230369a1'>Bạn đã trả lời đúng 50 trên tổng số 50 câu hỏi.</text><text x='70' y='1105' font-family='sans-serif' font-weight='bold' font-size='22' fill='%230369a1'>Điểm của bạn: 10.00 / 10</text></svg>"
+            },
+            {
+                id: 4,
+                filename: "934368a3758ef5d0ac9f.jpg",
+                title: "Ảnh 4: Web Design & Purpose of JS",
+                topic: "General",
+                topicBadgeClass: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+                scoreText: "Điểm bài gốc: 9.80 / 10",
+                description: "Khái niệm thiết kế đồ họa web và vai trò tạo tương tác động của ngôn ngữ JavaScript.",
+                svgSrc: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='1200' viewBox='0 0 800 1200' fill='%230f172a'><rect width='100%' height='100%' fill='%23f8fafc'/><rect x='40' y='60' width='720' height='380' rx='16' fill='white' stroke='%23e2e8f0' stroke-width='3'/><text x='80' y='120' font-family='sans-serif' font-weight='bold' font-size='28' fill='%230f172a'>49. Thiết kế đồ họa web là việc làm gì?</text><circle cx='100' cy='180' r='14' fill='%230284c7'/><circle cx='100' cy='180' r='6' fill='white'/><text x='130' y='188' font-family='sans-serif' font-size='24' fill='%230f172a'>Tạo hình ảnh, biểu tượng, màu sắc cho trang web</text><circle cx='100' cy='240' r='14' fill='none' stroke='%2394a3b8' stroke-width='3'/><text x='130' y='248' font-family='sans-serif' font-size='24' fill='%23334155'>Viết mã nguồn backend</text><rect x='40' y='480' width='720' height='380' rx='16' fill='white' stroke='%23e2e8f0' stroke-width='3'/><text x='80' y='540' font-family='sans-serif' font-weight='bold' font-size='28' fill='%230f172a'>50. Mục đích chính của việc sử dụng</text><text x='80' y='580' font-family='sans-serif' font-weight='bold' font-size='28' fill='%230f172a'>JavaScript?</text><circle cx='100' cy='640' r='14' fill='%230284c7'/><circle cx='100' cy='640' r='6' fill='white'/><text x='130' y='648' font-family='sans-serif' font-size='24' fill='%230f172a'>Tạo tương tác động trên trang web</text><circle cx='100' cy='700' r='14' fill='none' stroke='%2394a3b8' stroke-width='3'/><text x='130' y='708' font-family='sans-serif' font-size='24' fill='%23334155'>Tạo nội dung tĩnh</text><rect x='200' y='900' width='400' height='70' rx='12' fill='%23026aa7'/><text x='400' y='945' font-family='sans-serif' font-weight='bold' font-size='24' fill='white' text-anchor='middle'>Nộp bài và Xem điểm</text><rect x='40' y='1020' width='720' height='120' rx='12' fill='%23e0f2fe'/><text x='70' y='1070' font-family='sans-serif' font-size='22' fill='%230369a1'>Bạn đã trả lời đúng 49 trên tổng số 50 câu hỏi.</text><text x='70' y='1105' font-family='sans-serif' font-weight='bold' font-size='22' fill='%230369a1'>Điểm của bạn: 9.80 / 10</text></svg>"
+            }
+        ];
+
+        const questionsData = [
+            // Image 1
+            {
+                id: 1,
+                imageId: 1,
+                number: "49",
+                category: "CSS",
+                question: "Thuộc tính 'visibility: collapse' dùng trong trường hợp nào?",
+                options: [
+                    "Ẩn phần tử Table-row hoặc Table-column và xóa không gian",
+                    "Ẩn tất cả phần tử",
+                    "Hiển thị phần tử",
+                    "Không có thuộc tính này"
+                ],
+                correctIndex: 0,
+                explanation: "Thuộc tính 'collapse' đối với các phần tử bảng (table rows/columns) sẽ ẩn chúng đi và thu hẹp kích thước bảng mà không để lại khoảng trống thừa."
+            },
+            {
+                id: 2,
+                imageId: 1,
+                number: "50",
+                category: "CSS",
+                question: "Đơn vị '%' trong CSS đại diện cho gì?",
+                options: [
+                    "Tỷ lệ phần trăm so với phần tử cha",
+                    "Đo bằng pixels",
+                    "Đo bằng centimeters",
+                    "Không phải đơn vị hợp lệ"
+                ],
+                correctIndex: 0,
+                explanation: "Đơn vị phần trăm (%) tính toán kích thước dựa trên thuộc tính tương ứng của phần tử chứa nó trực tiếp (parent element)."
+            },
+            // Image 2
+            {
+                id: 3,
+                imageId: 2,
+                number: "49",
+                category: "JS",
+                question: "Phương thức nào kết hợp mảng thành chuỗi với dấu phân tách?",
+                options: [
+                    "join()",
+                    "concat()",
+                    "split()",
+                    "merge()"
+                ],
+                correctIndex: 0,
+                explanation: "Phương thức join(separator) nối tất cả các phần tử của mảng thành một chuỗi văn bản, ngăn cách bởi ký tự truyền vào."
+            },
+            {
+                id: 4,
+                imageId: 2,
+                number: "50",
+                category: "JS",
+                question: "JS chạy trực tiếp ở đâu trên trình duyệt?",
+                options: [
+                    "Phía client",
+                    "Phía server",
+                    "Trình thông dịch ngoài",
+                    "Bộ biên dịch máy"
+                ],
+                correctIndex: 0,
+                explanation: "JavaScript nguyên bản là ngôn ngữ kịch bản chạy trực tiếp trên trình duyệt web của người dùng (Client-side)."
+            },
+            // Image 3
+            {
+                id: 5,
+                imageId: 3,
+                number: "49",
+                category: "HTML",
+                question: "Thẻ <button> dùng để làm gì?",
+                options: [
+                    "Tạo nút bấm có thể có nội dung phong phú",
+                    "Tạo đoạn văn",
+                    "Chèn hình ảnh",
+                    "Tạo bảng"
+                ],
+                correctIndex: 0,
+                explanation: "Thẻ <button> trong HTML cho phép chứa văn bản, thẻ <img> hay icon bên trong, linh hoạt hơn thẻ <input type='button'>."
+            },
+            {
+                id: 6,
+                imageId: 3,
+                number: "50",
+                category: "HTML",
+                question: "Thuộc tính nào sau đây không thuộc thẻ <img>?",
+                options: [
+                    "width",
+                    "height",
+                    "href",
+                    "alt"
+                ],
+                correctIndex: 2,
+                explanation: "Thuộc tính 'href' dùng cho thẻ liên kết <a>, không phải thuộc tính của thẻ hình ảnh <img>."
+            },
+            // Image 4
+            {
+                id: 7,
+                imageId: 4,
+                number: "49",
+                category: "General",
+                question: "Thiết kế đồ họa web là việc làm gì?",
+                options: [
+                    "Tạo hình ảnh, biểu tượng, màu sắc cho trang web",
+                    "Viết mã nguồn backend",
+                    "Quản lý cơ sở dữ liệu",
+                    "Tối ưu mạng"
+                ],
+                correctIndex: 0,
+                explanation: "Thiết kế đồ họa web tập trung vào phần giao diện thị giác (UI), tạo nhận diện hình ảnh, màu sắc và icon cho website."
+            },
+            {
+                id: 8,
+                imageId: 4,
+                number: "50",
+                category: "General",
+                question: "Mục đích chính của việc sử dụng JavaScript?",
+                options: [
+                    "Tạo tương tác động trên trang web",
+                    "Tạo nội dung tĩnh",
+                    "Quản lý dữ liệu server",
+                    "Tối ưu SEO"
+                ],
+                correctIndex: 0,
+                explanation: "JavaScript giúp trang web xử lý sự kiện người dùng, animation, gửi/nhận dữ liệu mà không cần tải lại trang."
+            }
+        ];
+
+        // 2. Global State Variables
+        let currentSlideIndex = 0;
+        let activeCategoryFilter = 'all';
+
+        // 3. Carousel & Lightbox Logic
+        function updateCarouselDisplay() {
+            const current = imagesData[currentSlideIndex];
+            const imgEl = document.getElementById('carousel-img');
+            
+            // Try loading image file, fallback to SVG placeholder
+            imgEl.src = current.filename;
+            imgEl.onerror = () => { imgEl.src = current.svgSrc; };
+
+            document.getElementById('slide-title').innerText = current.title;
+            document.getElementById('slide-desc').innerText = current.description;
+            
+            const badgeTopic = document.getElementById('badge-topic');
+            badgeTopic.innerText = current.topic;
+            badgeTopic.className = `px-3 py-1 rounded-lg text-xs font-semibold ${current.topicBadgeClass} backdrop-blur-md border`;
+
+            document.getElementById('badge-score').innerText = current.scoreText;
+
+            // Render Dots
+            const dotsContainer = document.getElementById('carousel-dots');
+            dotsContainer.innerHTML = imagesData.map((_, i) => `
+                <button onclick="goToSlide(${i})" class="w-2.5 h-2.5 rounded-full transition-all ${i === currentSlideIndex ? 'bg-sky-400 w-6' : 'bg-slate-700 hover:bg-slate-500'}"></button>
+            `).join('');
+
+            // Render Thumbnails
+            const thumbList = document.getElementById('thumbnail-list');
+            thumbList.innerHTML = imagesData.map((img, i) => {
+                const isActive = i === currentSlideIndex;
+                return `
+                    <div onclick="goToSlide(${i})" class="p-2.5 rounded-xl border transition-all cursor-pointer flex items-center space-x-3 ${isActive ? 'bg-sky-500/10 border-sky-500/50 shadow-md shadow-sky-500/10' : 'glass-card border-slate-800/80 hover:border-slate-700'}">
+                        <div class="w-12 h-12 rounded-lg bg-slate-900 border border-slate-800 overflow-hidden flex-shrink-0 flex items-center justify-center">
+                            <img src="${img.filename}" onerror="this.src='${img.svgSrc}'" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <h5 class="text-xs font-bold text-white truncate">${img.title}</h5>
+                            <span class="text-[10px] text-slate-400 block">${img.scoreText}</span>
+                        </div>
+                        ${isActive ? '<i class="fa-solid fa-circle-check text-sky-400 text-sm"></i>' : ''}
+                    </div>
+                `;
+            }).join('');
+
+            // Update Lightbox if open
+            const lbImg = document.getElementById('lightbox-img');
+            if (lbImg) {
+                lbImg.src = current.filename;
+                lbImg.onerror = () => { lbImg.src = current.svgSrc; };
+                document.getElementById('lightbox-title').innerText = current.title;
+                document.getElementById('lightbox-desc').innerText = current.description;
+                document.getElementById('lightbox-counter').innerText = `${currentSlideIndex + 1} / ${imagesData.length}`;
+            }
+        }
+
+        function nextSlide() {
+            currentSlideIndex = (currentSlideIndex + 1) % imagesData.length;
+            updateCarouselDisplay();
+        }
+
+        function prevSlide() {
+            currentSlideIndex = (currentSlideIndex - 1 + imagesData.length) % imagesData.length;
+            updateCarouselDisplay();
+        }
+
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            updateCarouselDisplay();
+        }
+
+        function openLightbox() {
+            document.getElementById('lightbox').classList.remove('hidden');
+            document.getElementById('lightbox').classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            updateCarouselDisplay();
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.add('hidden');
+            document.getElementById('lightbox').classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 4. Questions Extraction List Logic
+        function renderQuestionsList() {
+            const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+            const listContainer = document.getElementById('questions-list');
+            const emptyState = document.getElementById('empty-state');
+
+            const filtered = questionsData.filter(q => {
+                const matchesCategory = (activeCategoryFilter === 'all') || (q.category === activeCategoryFilter);
+                const matchesSearch = q.question.toLowerCase().includes(searchVal) || 
+                                      q.options.some(opt => opt.toLowerCase().includes(searchVal)) ||
+                                      q.number.includes(searchVal);
+                return matchesCategory && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                listContainer.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            listContainer.innerHTML = filtered.map(q => {
+                const parentImage = imagesData.find(img => img.id === q.imageId);
+                return `
+                    <div class="glass-panel p-5 rounded-xl border border-slate-800 space-y-4 relative group hover:border-slate-700 transition-all">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2.5 py-0.5 rounded-md text-xs font-bold bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                                    Câu ${q.number}
+                                </span>
+                                <span class="px-2 py-0.5 rounded-md text-[11px] font-medium bg-slate-800 text-slate-300 border border-slate-700">
+                                    ${q.category}
+                                </span>
+                            </div>
+                            <button onclick="goToSlide(${parentImage.id - 1})" class="text-xs text-slate-400 hover:text-sky-400 transition-colors flex items-center gap-1" title="Xem ảnh gốc">
+                                <i class="fa-regular fa-image"></i>
+                                <span class="hidden sm:inline">Nguồn: Ảnh ${q.imageId}</span>
+                            </button>
+                        </div>
+
+                        <h4 class="text-sm sm:text-base font-bold text-white leading-relaxed">
+                            ${q.question}
+                        </h4>
+
+                        <div class="space-y-2 pt-1">
+                            ${q.options.map((opt, i) => {
+                                const isCorrect = i === q.correctIndex;
+                                return `
+                                    <div class="p-2.5 rounded-lg border text-xs sm:text-sm flex items-start space-x-3 transition-colors ${isCorrect ? 'bg-emerald-950/40 border-emerald-500/50 text-emerald-200' : 'bg-slate-900/40 border-slate-800 text-slate-400'}">
+                                        <div class="w-5 h-5 rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5 ${isCorrect ? 'bg-emerald-500 text-slate-950 font-bold' : 'border border-slate-700 text-slate-500'}">
+                                            ${isCorrect ? '<i class="fa-solid fa-check"></i>' : String.fromCharCode(65 + i)}
+                                        </div>
+                                        <span class="flex-grow font-medium leading-relaxed">${opt}</span>
+                                        ${isCorrect ? '<span class="text-[10px] font-bold tracking-wider uppercase bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Đáp án đúng</span>' : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-800/60 text-xs text-slate-400 flex items-start gap-1.5">
+                            <i class="fa-solid fa-circle-info text-sky-400 mt-0.5"></i>
+                            <span><strong class="text-slate-300">Giải thích:</strong> ${q.explanation}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterQuestions() {
+            renderQuestionsList();
+        }
+
+        function setFilter(cat) {
+            activeCategoryFilter = cat;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.category === cat) {
+                    btn.className = 'filter-btn active px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-sky-600 text-white border border-sky-500 shadow-md shadow-sky-600/20';
+                } else {
+                    btn.className = 'filter-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all bg-slate-800/80 text-slate-300 hover:bg-slate-700 border border-slate-700';
+                }
+            });
+            renderQuestionsList();
+        }
+
+        // 5. Interactive Practice Form
+        function renderPracticeQuestions() {
+            const container = document.getElementById('practice-questions-container');
+            container.innerHTML = questionsData.map((q, idx) => `
+                <div class="glass-card p-4 sm:p-5 rounded-xl border border-slate-800/80 space-y-3" id="practice-card-${idx}">
+                    <p class="text-sm sm:text-base font-bold text-white">
+                        <span class="text-sky-400">Câu ${idx + 1}:</span> ${q.question}
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        ${q.options.map((opt, optIdx) => `
+                            <label id="practice-lbl-${idx}-${optIdx}" class="flex items-start p-2.5 rounded-lg border border-slate-800/80 bg-slate-900/50 hover:bg-slate-800/80 cursor-pointer text-xs sm:text-sm text-slate-300 transition-colors">
+                                <input type="radio" name="practice-${idx}" value="${optIdx}" class="mt-0.5 text-sky-500 focus:ring-sky-400 border-slate-700">
+                                <span class="ml-2.5">${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handlePracticeSubmit(e) {
+            e.preventDefault();
+            let correctCount = 0;
+
+            questionsData.forEach((q, idx) => {
+                const selected = document.querySelector(`input[name="practice-${idx}"]:checked`);
+                const card = document.getElementById(`practice-card-${idx}`);
+
+                q.options.forEach((_, optIdx) => {
+                    const lbl = document.getElementById(`practice-lbl-${idx}-${optIdx}`);
+                    lbl.classList.remove('bg-emerald-950/60', 'border-emerald-500', 'bg-rose-950/60', 'border-rose-500');
+                    if (optIdx === q.correctIndex) {
+                        lbl.classList.add('bg-emerald-950/60', 'border-emerald-500/80', 'text-emerald-200');
+                    }
+                });
+
+                if (selected) {
+                    const val = parseInt(selected.value);
+                    if (val === q.correctIndex) {
+                        correctCount++;
+                    } else {
+                        const wrongLbl = document.getElementById(`practice-lbl-${idx}-${val}`);
+                        wrongLbl.classList.add('bg-rose-950/60', 'border-rose-500/80', 'text-rose-200');
+                    }
+                }
+            });
+
+            const resultContainer = document.getElementById('practice-result');
+            resultContainer.classList.remove('hidden');
+            document.getElementById('practice-score-text').innerText = `${correctCount} / ${questionsData.length} câu`;
+            
+            const grade = ((correctCount / questionsData.length) * 10).toFixed(2);
+            document.getElementById('practice-grade').innerText = `${grade} / 10.0 điểm`;
+        }
+
+        function resetPractice() {
+            document.getElementById('practice-form').reset();
+            document.getElementById('practice-result').classList.add('hidden');
+            renderPracticeQuestions();
+        }
+
+        // Keyboard navigation for Lightbox & Carousel
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'Escape') closeLightbox();
+        });
+
+        // Initial Load
+        window.onload = function() {
+            updateCarouselDisplay();
+            renderQuestionsList();
+            renderPracticeQuestions();
+        };
+    </script>
+</body>
+</html>
